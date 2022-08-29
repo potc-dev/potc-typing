@@ -65,7 +65,7 @@ setup(
     ],
     entry_points={
         'potc_plugin': [
-            'pretty_dict=potc_typing.plugin:__rules__'
+            'potc_typing=potc_typing.plugin:__rules__'
         ]
     },
 )
