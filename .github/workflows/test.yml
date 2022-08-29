@@ -52,7 +52,7 @@ jobs:
       - name: Run unittest
         env:
           CI: 'true'
-          MIN_COVERAGE: '90'
+          MIN_COVERAGE: '80'
         run: |
           make unittest
       - name: Upload coverage to Codecov
