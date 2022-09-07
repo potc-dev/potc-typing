@@ -6,7 +6,7 @@ from potc.rules import builtin_type
 
 @rule(type_=type)
 def type_none(v, addon: Addons):
-    if isinstance(None, v):
+    if v == type(None):
         return addon.val(type)(None)
     else:
         addon.unprocessable()
