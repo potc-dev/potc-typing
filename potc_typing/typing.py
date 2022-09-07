@@ -66,6 +66,26 @@ def typing_callable(v, addon: Addons):
 
 @rule()
 @_is_wrapper
+def typing_optional(v, addon: Addons):
+    origin = _origin_trans(v)
+    if origin is typing.Union:
+        items, is_optional = [], False
+        for arg in v.__args__:
+            if arg is None or (isinstance(arg, type) and isinstance(None, arg)):
+                is_optional = True
+            else:
+                items.append(arg)
+
+        if is_optional:
+            return addon.val(typing.Optional)[origin[tuple(items)]]
+        else:
+            addon.unprocessable()
+    else:
+        addon.unprocessable()
+
+
+@rule()
+@_is_wrapper
 def typing_wrapper(v, addon: Addons):
     _base = addon.val(_origin_trans(v))
     if len(v.__args__) == 0:
@@ -133,6 +153,7 @@ _typing_self_all = [
         typing_typevar,
         typing_items,
         typing_callable,
+        typing_optional,
         typing_wrapper,
     )
 ]
@@ -152,4 +173,3 @@ typing_all = [
         [builtin_raw_type, builtin_object]
     ),
 ]
-

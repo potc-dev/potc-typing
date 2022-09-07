@@ -5,27 +5,11 @@ import pytest
 
 from potc.testing import provement
 from potc.testing import transobj_assert
-
-try:
-    from typing import TypingMeta
-except ImportError:
-    is_3_6 = False
-else:
-    is_3_6 = True
-
-try:
-    _ = list[int]
-except TypeError:
-    is_3_9 = False
-else:
-    is_3_9 = True
-
-only_3_6 = pytest.mark.unittest if is_3_6 else pytest.mark.ignore
-only_3_9 = pytest.mark.unittest if is_3_9 else pytest.mark.ignore
+from .testings import is_3_6, is_3_9
 
 
 @pytest.mark.unittest
-class TestPlugin(provement()):
+class TestTyping(provement()):
     def test_typing_items(self):
         with transobj_assert(NoReturn) as (obj, name):
             assert obj is NoReturn
